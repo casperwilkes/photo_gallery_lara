@@ -14,12 +14,12 @@
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link rel="icon" href="{{ url('/') }}/favicon.ico" type="image/x-icon" />
-        <base href="{{ url('/') }}">
+        <base href="{{ url('/') }}/">
     </head>
     <body>
 
         <div id="app">
-            <nav class="navbar navbar-default navbar-static-top">
+            <nav class="navbar navbar-default navbar-static-fixed-top">
                 <div class="container">
                     <div class="navbar-header">
 
@@ -41,7 +41,8 @@
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
                         <!-- Left Side Of Navbar -->
                         <ul class="nav navbar-nav">
-                            <li><a href="{{ route('home') }}">Home</a></li>
+                            <li><a href="home">Home</a></li>
+                            <li><a href="{{ url('/photographs') }}">Photographs</a></li>
                         </ul>
 
                         <!-- Right Side Of Navbar -->

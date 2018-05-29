@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller {
@@ -29,6 +30,9 @@ class HomeController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function dashboard() {
-        return view('home/dashboard');
+        // Fetch user //
+        $user = User::find(auth()->user('id'));
+
+        return view('home/dashboard', array('user' => $user));
     }
 }

@@ -27,3 +27,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // User dashboard | After login //
 Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard')->middleware('auth');
+
+// Photograph //
+Route::Resource('photographs', 'PhotographsController');
