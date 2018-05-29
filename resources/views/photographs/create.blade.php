@@ -2,14 +2,14 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 text-center">
             <h1>Upload a New Photograph</h1>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-3">
-            <a href="photographs" class="btn btn-primary">Back to main</a>
+            <a href="photographs" class="btn btn-xs btn-primary">Back to main</a>
         </div>
     </div>
 
@@ -24,14 +24,16 @@
                         <div class="form-group">
                             <label for="image" class="col-md-1 control-label">Image</label>
                             <div class="col-md-8">
-                                <input type="file" name="image" id="image" value="" class="form-control" required>
+                                <input type="file" name="image" id="image" value="{{old('image')}}"
+                                       class="form-control" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="caption" class="col-md-1 control-label">Caption</label>
                             <div class="col-md-10">
-                                <input type="text" name="caption" id="caption" value="" class="form-control" required>
+                                <input type="text" name="caption" id="caption" value="{{old('caption')}}"
+                                       class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">

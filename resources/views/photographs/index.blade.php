@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <a href="photographs/create" class="btn btn-primary">Upload a new photograph</a>
+        <a href="photographs/create" class="btn btn-xs btn-primary">Upload a new photograph</a>
     </div>
 
     <div class="row">
@@ -15,7 +15,7 @@
                         </a>
 
                         <div class="caption">
-                            <p>{{ $photo->caption }}</p>
+                            <p>{{ ucwords($photo->caption) }}</p>
                         </div>
                     </div>
                 @endforeach
