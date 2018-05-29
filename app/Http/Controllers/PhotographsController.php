@@ -205,8 +205,11 @@ class PhotographsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Photograph $photograph) {
+        // Get user id //
+        $user = auth()->user()->id;
+
         // Check access //
-        if (auth()->user()->id !== $photograph->user_id) {
+        if ($user !== $photograph->user_id) {
             return redirect('/photographs')->with('error', 'Unauthorized access');
         }
 
@@ -216,16 +219,26 @@ class PhotographsController extends Controller {
             'text' => 'Unable to remove photograph at this time. Please try again later.',
         );
 
-        $user = auth()->user();
 
         // Got to remove old images here //
+        $main = Storage::disk('public_upload')->delete("main/{$photograph->filename}");
+        $thumb = Storage::disk('public_upload')->delete("main/thumb/{$photograph->filename}");
+
+        // Check image deleted //
+        if (!$main) {
+            Log::error('Unable to remove main photograph', array('Photo' => $photograph->filename));
+        }
+        // Check thumb deleted //
+        if (!$thumb) {
+            Log::error('Unable to remove thumb photograph', array('Photo' => $photograph->filename));
+        }
 
         try {
             // Attempt to delete //
             if ($photograph->delete()) {
                 $message['status'] = 'success';
                 $message['text'] = 'Successfully removed photo';
-                Log::info('Image was removed', array('User' => $user->id, 'Photo' => $photograph->id));
+                Log::info('Image was removed', array('User' => $user, 'Photo' => $photograph->id));
             }
         } catch (\Exception $e) {
             // Catch exception if thrown //
