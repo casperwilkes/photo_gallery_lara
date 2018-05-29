@@ -10,3 +10,12 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .env
+
+# ignore image thumbs #
+public/img/main/thumb/*
+# ignore image main #
+public/img/main/*
+# Do not ignore thumb dir #
+!public/img/main/thumb
+# Do not ignore index files #
+!index.html
