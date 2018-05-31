@@ -33,4 +33,8 @@ class User extends Authenticatable {
     public function photographs() {
         return $this->hasMany(Photograph::class);
     }
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }

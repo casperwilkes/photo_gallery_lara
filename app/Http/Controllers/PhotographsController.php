@@ -133,7 +133,12 @@ class PhotographsController extends Controller {
      */
     public function show(Photograph $photograph) {
         // Display the photo //
-        return view('photographs.show', array('photo' => $photograph));
+        $data = array(
+            'photo' => $photograph,
+            'comments' => $photograph->comments()->with('user')->get(),
+        );
+
+        return view('photographs.show', $data);
     }
 
     /**

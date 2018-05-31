@@ -3,22 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
 
-class Photograph extends Model {
+class Comment extends Model {
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'photographs';
+    protected $table = 'comments';
 
     public function user() {
         return $this->belongsTo(User::class);
     }
 
-    public function comments() {
-        return $this->hasMany(Comment::class);
+    public function photograph() {
+        return $this->belongsTo(Photograph::class);
     }
 }

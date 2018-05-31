@@ -30,3 +30,7 @@ Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard')->middlew
 
 // Photograph //
 Route::Resource('photographs', 'PhotographsController');
+
+// Comments //
+Route::post('comments', 'CommentsController@store')->name('comments.store');
+Route::delete('comments/{comment}', 'CommentsController@destroy')->name('comments.destroy');
