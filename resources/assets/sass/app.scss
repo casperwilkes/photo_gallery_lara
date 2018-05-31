@@ -1,9 +1,14 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");
+
+// Icon path //
+$icon-font-path: "../fonts/vendor/bootstrap-sass/bootstrap/";
+
+// Bootstrap
+@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
 // Variables
 @import "yeti_variables";
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 // Theme //
 @import "yetitheme";
 // Custom //
