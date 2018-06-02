@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
@@ -13,9 +14,12 @@ class UsersTableSeeder extends Seeder {
      */
     public function run() {
         // Default profile fields //
-        $profile_fields = encrypt(array('bio' => '', 'avatar' => ''));
+        $profile_fields = array('bio' => '', 'avatar' => '');
+        // Encrypted profile_fields //
+        $pfe = encrypt($profile_fields);
         // For seeding purposes only //
         $password = bcrypt('password');
+        $date = Carbon::now();
 
         // Generate main testing //
         User::insert(
@@ -24,19 +28,28 @@ class UsersTableSeeder extends Seeder {
                     'name' => 'admin',
                     'email' => 'admin@admin.com',
                     'password' => $password,
-                    'profile_fields' => $profile_fields,
+                    'profile_fields' => $pfe,
+                    'remember_token' => str_random(10),
+                    'created_at' => $date,
+                    'updated_at' => $date,
                 ),
                 array(
                     'name' => 'wendy',
                     'email' => 'wendy@wendys.com',
                     'password' => $password,
-                    'profile_fields' => $profile_fields,
+                    'profile_fields' => $pfe,
+                    'remember_token' => str_random(10),
+                    'created_at' => $date,
+                    'updated_at' => $date,
                 ),
                 array(
                     'name' => 'dave',
                     'email' => 'dave@wendys.com',
                     'password' => $password,
-                    'profile_fields' => $profile_fields,
+                    'profile_fields' => $pfe,
+                    'remember_token' => str_random(10),
+                    'created_at' => $date,
+                    'updated_at' => $date,
                 ),
             )
         );
@@ -45,7 +58,6 @@ class UsersTableSeeder extends Seeder {
         factory(App\User::class, 50)
             ->create(
                 array(
-                    'password' => $password,
                     'profile_fields' => $profile_fields,
                 )
             );
