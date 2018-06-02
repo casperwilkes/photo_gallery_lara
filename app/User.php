@@ -18,6 +18,7 @@ class User extends Authenticatable {
         'name',
         'email',
         'password',
+        'profile_fields',
     ];
 
     /**
@@ -30,11 +31,48 @@ class User extends Authenticatable {
         'remember_token',
     ];
 
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'profile_fields' => 'array',
+    ];
+
+    /**
+     * Photographs relationship.
+     *  User has many photos
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function photographs() {
         return $this->hasMany(Photograph::class);
     }
 
+    /**
+     * Comments relationship.
+     *  User has many comments
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function comments() {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * User profile fields mutator.
+     *  Encrypts profile fields
+     * @param $value
+     * @return string
+     */
+    public function setProfileFieldsAttribute($value) {
+        $this->attributes['profile_fields'] = encrypt($value);
+    }
+
+    /**
+     * User profile fields accessor.
+     *  Decrypts profile fields
+     * @param $value
+     * @return string
+     */
+    public function getProfileFieldsAttribute($value) {
+        return decrypt($value);
     }
 }
