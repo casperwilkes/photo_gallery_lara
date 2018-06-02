@@ -208,8 +208,11 @@ class clear extends Command {
 
         $storage = Storage::disk('public_upload');
 
+        // Main //
         $storage->deleteDirectory('main');
+
         // Avatars //
+        $storage->deleteDirectory('avatar');
 
         $this->info('Image files successfully cleared!');
 

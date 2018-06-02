@@ -4,12 +4,14 @@
 // Icon path //
 $icon-font-path: "../fonts/vendor/bootstrap-sass/bootstrap/";
 
+// Variables
+@import "yeti_variables";
+
 // Bootstrap
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-// Variables
-@import "yeti_variables";
 // Theme //
 @import "yetitheme";
+
 // Custom //
 @import "main";

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 if (!function_exists('build_img_structure')) {
@@ -10,21 +11,23 @@ if (!function_exists('build_img_structure')) {
     function build_img_structure() {
         // Get the public upload disk
         $main = Storage::disk('public_upload');
+        $main_root = $main->getAdapter()->getPathPrefix();
+        $resource_root = resource_path('img/');
 
-        // Build out directories  //
+        // Build out main image directory //
         if (!$main->exists('main')) {
-            $main->makeDirectory('main');
-        }
-        if (!$main->exists('main/thumb')) {
-            $main->makeDirectory('main/thumb');
+            // Setup paths //
+            $main_path = $main_root . 'main/';
+            $r_main_path = $resource_root . 'main/';
+
+            File::copyDirectory($r_main_path, $main_path);
         }
 
-        // Build out index files //
-        if (!$main->exists('main/index.html')) {
-            $main->put('main/index.html', '');
-        }
-        if (!$main->exists('main/thumb/index.html')) {
-            $main->put('main/thumb/index.html', '');
+        // Build out avatar directory //
+        if (!$main->exists('avatar')) {
+            $avatar_path = $main_root . 'avatar/';
+            $r_avatar_path = $resource_root . 'avatar/';
+            File::copyDirectory($r_avatar_path, $avatar_path);
         }
     }
 }
