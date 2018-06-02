@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Support\Facades\Session;
+use Faker\Factory;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
+use Log;
 
 class HomeController extends Controller {
 
@@ -31,8 +36,13 @@ class HomeController extends Controller {
      */
     public function dashboard() {
         // Fetch user //
-        $user = User::find(auth()->user('id'));
+        $user = User::find(auth()->user()->id);
 
         return view('home/dashboard', array('user' => $user));
+    }
+
+    public function test() {
+
+        return view('home/dashboard');
     }
 }
