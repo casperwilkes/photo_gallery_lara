@@ -65,61 +65,33 @@ class PhotographsController extends Controller {
         // Get user //
         $user = auth()->user()->id;
 
-        // Attempt to Save the image //
-        $path = $request->image->store('main', 'public_upload');
+        // Init new photograph model //
+        $photo = new Photograph();
 
-        // Check valid path //
-        if ($path) {
-            // Get file name //
-            $file_name = basename($path);
+        // Save the file //
+        $save_image = $photo->saveImage($request->image);
 
-            // Setup image path for uploading //
-            $img_path = config('filesystems.disks.public_upload.root') . '/main/';
+        // Check if saved //
+        if ($save_image) {
+            // Set values //
+            $photo->user_id = $user;
+            $photo->filename = $save_image['name'];
+            $photo->type = $save_image['type'];
+            $photo->size = $save_image['size'];
+            $photo->caption = $request->input('caption');
 
-            // Thumb path //
-            $thumb_path = $img_path . 'thumb/' . $file_name;
+            // Save the photo //
+            if ($photo->save()) {
+                $message['status'] = 'success';
+                $message['text'] = 'Your photograph was successfully uploaded';
+                $new = '/' . $photo->id;
 
-            // Setup thumbnail & save //
-            $thumb = Image::make($img_path . $file_name)
-                          ->resize(200, null, function ($constrain) {
-                              $constrain->aspectRatio();
-                          })->save($thumb_path);
-
-            // Check we got back a valid instance //
-            if ($thumb) {
-                // Get file object //
-                $file = $request->file('image');
-
-                // Instantiate a new photograph //
-                $photo = new Photograph();
-
-                // Set values //
-                $photo->user_id = $user;
-                $photo->filename = $file_name;
-                $photo->type = $file->getClientMimeType();
-                $photo->size = $file->getSize();
-                $photo->caption = $request->input('caption');
-
-                // Save the photo //
-                if ($photo->save()) {
-                    $message['status'] = 'success';
-                    $message['text'] = 'Your photograph was successfully uploaded';
-                    $new = '/' . $photo->id;
-
-                    Log::info('User uploaded a new photo', array('User' => $user, 'photo' => $photo->id));
-                } else {
-                    Log::error('Unable to save photograph', array('User' => $user, 'request' => $request->all()));
-                }
+                Log::info('User uploaded a new photo', array('User' => $user, 'photo' => $photo->id));
             } else {
-                Log::error('Unable to save image thumb', array(
-                    'User' => $user->id,
-                    'image_path' => $img_path . $file_name,
-                    'thumb_path' => $thumb_path,
-                ));
+                Log::error('Unable to save photograph', array('User' => $user, 'request' => $request->all()));
             }
-        } else {
-            Log::error('Unable to save image path', array('User' => $user->id, 'Image_Path' => $path));
         }
+
 
         // Redirect to new photo //
         return redirect("/photographs{$new}")->with($message['status'], $message['text']);

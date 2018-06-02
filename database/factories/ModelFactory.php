@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use App\User;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -18,7 +22,43 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'password' => $password ?: $password = bcrypt('password'),
         'remember_token' => str_random(10),
     ];
+});
+
+$factory->define(App\Photograph::class, function (Faker\Generator $faker) {
+    // Main storage path //
+    $main = Storage::disk('public_upload');
+    // Set image path //
+    $img_path = $main->getAdapter()->getPathPrefix() . 'main';
+    // Img faker gets //
+    $img = $faker->image($img_path, 640, 480);
+    // Get image base name //
+    $file_name = basename($img);
+    // Thumb path //
+    $thumb_path = $img_path . '/thumb/' . $file_name;
+
+    // Setup thumbnail & save //
+    Image::make($img_path . '/' . $file_name)
+         ->resize(200, null, function ($constrain) {
+             $constrain->aspectRatio();
+         })->save($thumb_path);
+
+    return array(
+        'user_id' => User::all()->random()->id,
+        //'user_id' => 1,
+        'filename' => $file_name,
+        'type' => mime_content_type($img),
+        'size' => filesize($img),
+        'caption' => $faker->realText(50),
+    );
+});
+
+$factory->define(App\Comment::class, function (\Faker\Generator $faker) {
+    return array(
+        'photograph_id' => \App\Photograph::all()->random()->id,
+        'user_id' => User::all()->random()->id,
+        'body' => $faker->realText(),
+    );
 });

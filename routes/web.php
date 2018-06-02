@@ -18,6 +18,7 @@
 //});
 
 Route::get('/', array('uses' => 'HomeController@index'));
+Route::get('/test/', 'HomeController@test')->name('test');
 
 // Authentication routes //
 Auth::routes();
