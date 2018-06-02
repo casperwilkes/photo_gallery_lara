@@ -20,14 +20,20 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
+        'name' => $faker->unique()->userName,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('password'),
         'remember_token' => str_random(10),
     ];
 });
 
+/**
+ * Build out the photograph definition
+ */
 $factory->define(App\Photograph::class, function (Faker\Generator $faker) {
+    // Build out img structure //
+    build_img_structure();
+
     // Main storage path //
     $main = Storage::disk('public_upload');
     // Set image path //
@@ -55,6 +61,9 @@ $factory->define(App\Photograph::class, function (Faker\Generator $faker) {
     );
 });
 
+/**
+ * Comment definition
+ */
 $factory->define(App\Comment::class, function (\Faker\Generator $faker) {
     return array(
         'photograph_id' => \App\Photograph::all()->random()->id,

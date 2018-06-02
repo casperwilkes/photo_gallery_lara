@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 use Log;
 use Symfony\Component\Console\Helper\ProgressBar;
 
@@ -205,32 +206,9 @@ class clear extends Command {
         // Logs //
         $this->line('Images:');
 
-        // Img formats to match //
-        $img_mimes = array('gif', 'jpg', 'jpeg', 'png');
+        $storage = Storage::disk('public_upload');
 
-        // Path to the img directory //
-        $img_path = public_path('img/main/');
-
-        // What to match //
-        $glob_match = '*.{' . implode(',', $img_mimes) . '}';
-
-        // Get all img files matching img mimes //
-        $main = glob($img_path . $glob_match, GLOB_BRACE);
-
-        // Thumbnails //
-        $thumb = glob($img_path . 'thumb/' . $glob_match, GLOB_BRACE);
-
-        // Loop through and remove //
-        // Main imgs //
-        foreach ($main as $m) {
-            unlink($m);
-        }
-
-        // Thumbnails //
-        foreach ($thumb as $t) {
-            unlink($t);
-        }
-
+        $storage->deleteDirectory('main');
         // Avatars //
 
         $this->info('Image files successfully cleared!');

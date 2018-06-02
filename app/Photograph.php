@@ -42,6 +42,9 @@ class Photograph extends Model {
         // Get public upload storage disk //
         $main = Storage::disk('public_upload');
 
+        // Builds img structure //
+        build_img_structure();
+
         // Setup image path for uploading //
         $img_path = $main->getAdapter()->getPathPrefix() . 'main/';
 
