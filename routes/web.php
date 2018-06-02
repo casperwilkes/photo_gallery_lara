@@ -18,7 +18,7 @@
 //});
 
 Route::get('/', array('uses' => 'HomeController@index'));
-Route::get('/test/', 'HomeController@test')->name('test');
+Route::get('/test/{data?}', 'HomeController@test')->name('test');
 
 // Authentication routes //
 Auth::routes();
@@ -27,7 +27,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // User dashboard | After login //
-Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard')->middleware('auth');
+Route::get('/dashboard/{user?}', 'HomeController@dashboard')->name('dashboard');
 
 // Photograph //
 Route::Resource('photographs', 'PhotographsController');

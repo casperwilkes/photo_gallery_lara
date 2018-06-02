@@ -40,7 +40,7 @@
         <div class="col-md-4">
             <dl class="dl-horizontal">
                 <dt>Uploaded by:</dt>
-                <dd>{{ $photo->user->name }}</dd>
+                <dd><a href="dashboard/{{ $photo->user->name }}">{{ $photo->user->name }}</a></dd>
                 <dt>Uploaded on:</dt>
                 <dd>{{ $photo->created_at->format(' F d, Y g:i a') }}</dd>
             </dl>
@@ -89,7 +89,7 @@
                             <div class="clearfix">
                                 <div class="col-md-10">
                                     {{--{{ html_anchor('profile/view/'~comment.user.username, comment.user.username) }}--}}
-                                    <a href="#">{{ $comment->user->name }}</a>
+                                    <a href="dashboard/{{$comment->user->name}}">{{ $comment->user->name }}</a>
                                     <strong>Wrote:</strong>
                                 </div>
                                 @auth
