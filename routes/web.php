@@ -26,12 +26,14 @@ Auth::routes();
 // Home page //
 Route::get('/home', 'HomeController@index')->name('home');
 
-// User dashboard | After login //
-Route::get('/dashboard/{user?}', 'HomeController@dashboard')->name('dashboard');
-
 // Photograph //
 Route::Resource('photographs', 'PhotographsController');
 
 // Comments //
 Route::post('comments', 'CommentsController@store')->name('comments.store');
 Route::delete('comments/{comment}', 'CommentsController@destroy')->name('comments.destroy');
+
+// User profile | After login //
+Route::get('profile/{user?}', 'UsersController@profile')->name('profile');
+Route::get('profile/{user}/edit', 'UsersController@edit')->name('profile.edit');
+Route::put('profile/{user}', 'UsersController@update')->name('profile.update');

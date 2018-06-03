@@ -27,7 +27,7 @@ class LoginController extends Controller {
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/profile';
 
     /**
      * Create a new controller instance.
@@ -46,5 +46,15 @@ class LoginController extends Controller {
      */
     protected function authenticated(Request $request, $user) {
         $request->session()->flash('success', "Welcome back {$user->name}");
+    }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'name';
     }
 }
