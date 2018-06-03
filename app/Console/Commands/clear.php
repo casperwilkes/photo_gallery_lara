@@ -15,6 +15,7 @@ class clear extends Command {
      * @var string
      */
     protected $signature = 'clear '
+                           . '{--i|image : Remove image directories} '
                            . '{--m|migrate : Refresh migrations '
                            . '(run php artisan migrate:refresh -h for more)} '
                            . '{--s|seed : Re-seed the database '
@@ -27,11 +28,6 @@ class clear extends Command {
      */
     protected $description = 'Clears all cache files and logs from application';
 
-    /**
-     * Progress bar
-     * @var ProgressBar
-     */
-    //private $bar;
 
     /**
      * Create a new command instance.
@@ -50,12 +46,14 @@ class clear extends Command {
     public function handle() {
         // Initial procs for bar //
         // One for every task //
-        $procs = '6';
+        $procs = '5';
 
         // Get migrate option //
         $migration = $this->option('migrate');
 
         $seed = $this->option('seed');
+
+        $image = $this->option('image');
 
         // Migrate option called //
         if ($migration) {
@@ -65,6 +63,12 @@ class clear extends Command {
 
         // Seed option called //
         if ($seed) {
+            // Up the procs //
+            $procs++;
+        }
+
+        // Image options //
+        if($image){
             // Up the procs //
             $procs++;
         }
@@ -90,7 +94,9 @@ class clear extends Command {
         $this->routes($bar);
 
         // Images //
-        $this->images($bar);
+        if($image){
+            $this->images($bar);
+        }
 
         // Run migrations //
         if ($migration) {
