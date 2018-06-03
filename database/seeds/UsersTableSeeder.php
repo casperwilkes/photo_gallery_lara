@@ -55,7 +55,7 @@ class UsersTableSeeder extends Seeder {
         );
 
         // Generate fakes //
-        factory(App\User::class, 50)
+        factory(App\User::class, 70)
             ->create(
                 array(
                     'profile_fields' => $profile_fields,
