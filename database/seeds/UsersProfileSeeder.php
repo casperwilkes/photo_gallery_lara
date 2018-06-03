@@ -16,7 +16,7 @@ class UsersProfileSeeder extends Seeder {
     public function run() {
         $faker = Factory::create();
 
-        $iteration = 50;
+        $iteration = 30;
         $users = User::all()->random($iteration);
 
         // Main storage path //
