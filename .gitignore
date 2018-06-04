@@ -12,8 +12,4 @@ yarn-error.log
 .env
 
 # ignore image main #
-public/img/main/*
-# ignore avatars #
-public/img/avatar/*
-# Do not ignore index files #
-!index.html
+public/img/*
