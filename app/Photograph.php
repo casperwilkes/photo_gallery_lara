@@ -84,4 +84,22 @@ class Photograph extends Model {
 
         return false;
     }
+
+    /**
+     * Gets the next photograph in database
+     * @return Photograph|Model|null
+     */
+    public function next() {
+        // get next user
+        return $this->where('id', '>', $this->id)->orderBy('id', 'asc')->first(array('id'));
+    }
+
+    /**
+     * Gets the previous photograph in database
+     * @return Photograph|Model|null
+     */
+    public function previous() {
+        // get previous  user
+        return $this->where('id', '<', $this->id)->orderBy('id', 'desc')->first(array('id'));
+    }
 }

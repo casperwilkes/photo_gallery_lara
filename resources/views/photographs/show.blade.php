@@ -14,7 +14,26 @@
             </p>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                @if($photo->previous())
+                    <a href="photographs/{{$photo->previous()->id}}"
+                       title="{{$photo->previous()->caption}}"
+                       class="btn btn-primary pull-left">
+                        <span class="glyphicon glyphicon-chevron-left"></span> Previous
+                    </a>
+                @endif
+                @if($photo->next())
+                    <a href="photographs/{{$photo->next()->id}}"
+                       title="{{$photo->next()->caption}}"
+                       class="btn btn-primary pull-right">
+                        Next <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                @endif
+            </p>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <h1 class="text-center">{{ ucwords($photo->caption) }}</h1>
@@ -24,7 +43,7 @@
     <div class="row">
         <div class="col-md-12">
             <img src="{{asset("img/main/{$photo->filename}")}}" alt="{{$photo->caption}}"
-                 class="center-block img-responsive">
+                 class="center-block img-responsive img-thumbnail">
         </div>
     </div>
     <br>
@@ -54,26 +73,28 @@
             @endguest
 
             @auth
-                <form class="form form-horizontal" action="comments" method="post">
-                    <fieldset>
-                        {{ csrf_field() }}
-                        <input type="hidden" name="photo_id" value="{{ $photo->id }}">
-                        <div class="form-group">
-                            <div class="col-md-12">
+                <div class="well well-lg">
+                    <form class="form form-horizontal" action="comments" method="post">
+                        <fieldset>
+                            {{ csrf_field() }}
+                            <input type="hidden" name="photo_id" value="{{ $photo->id }}">
+                            <div class="form-group">
+                                <div class="col-md-12">
                                 <textarea name="comment"
                                           class="form-control"
                                           placeholder="What would you like to say?"
                                           rows="4"
                                           required></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <button class="btn btn-primary">Submit Comment</button>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary">Submit Comment</button>
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
-                </form>
+                        </fieldset>
+                    </form>
+                </div>
             @endauth
         </div>
     </div>
@@ -81,16 +102,25 @@
     <div class="row top-buffer">
         @if($comments->isNotEmpty())
             @foreach($comments as $comment)
-                {{--{% for comment in comments %}--}}
-
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <div class="well well-sm">
                             <div class="clearfix">
                                 <div class="col-md-10">
-                                    {{--{{ html_anchor('profile/view/'~comment.user.username, comment.user.username) }}--}}
-                                    <a href="profile/{{$comment->user->name}}">{{ $comment->user->name }}</a>
-                                    <strong>Wrote:</strong>
+                                    <p>
+                                        <a href="profile/{{$comment->user->name}}" title="{{$comment->user->name}}">
+                                            <img src="img/avatar/thumb/{{$comment->user->avatar}}"
+                                                 alt="User profile pic"
+                                                 class="img-circle comment_img" />
+                                        </a>
+                                        <span class="comment_user">
+                                            <a href="profile/{{$comment->user->name}}"
+                                               title="View {{$comment->user->name}}'s profile">
+                                                {{ $comment->user->name }}
+                                            </a>
+                                            wrote:
+                                        </span>
+                                    </p>
                                 </div>
                                 @auth
                                     @if(Auth::user()->id === $comment->user_id)
@@ -98,15 +128,17 @@
                                             <form action="comments/{{ $comment->id }}" method="POST">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
-                                                <button class="btn btn-xs btn-danger">
+                                                <button class="btn btn-xs btn-danger" title="Delete this comment">
                                                     <span class="glyphicon glyphicon-trash"></span> Delete
                                                 </button>
                                             </form>
                                         </div>
                                     @endif
                                 @endauth
-                                <div class="col-md-11 col-md-offset-1">
-                                    {!! nl2br(e($comment->body)) !!}
+                                <div class="col-md-12">
+                                    <div class="well well-sm">
+                                        <p>{!! nl2br(e($comment->body)) !!}</p>
+                                    </div>
                                     <div class="col-md-12 text-right">
                                         <small>
                                             <strong>Created:</strong> {{ $comment->created_at->format(' F d, Y g:i a') }}

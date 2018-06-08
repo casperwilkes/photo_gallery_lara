@@ -43,6 +43,12 @@ class User extends Authenticatable {
     ];
 
     /**
+     * Default avatar
+     * @var string
+     */
+    private $avatar = 'noimg.png';
+
+    /**
      * Photographs relationship.
      *  User has many photos
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -80,7 +86,20 @@ class User extends Authenticatable {
         return decrypt($value);
     }
 
-    public function saveAvatar(UploadedFile $image){
+    /**
+     * An accessor to the users avatar. Gets set one, or a default
+     * @return string
+     */
+    public function getAvatarAttribute() {
+        return empty($this->profile_fields['avatar']) ? $this->avatar : $this->profile_fields['avatar'];
+    }
+
+    /**
+     * Saves a user's avatar to the filesystem
+     * @param UploadedFile $image
+     * @return array|bool
+     */
+    public function saveAvatar(UploadedFile $image) {
         // Get public upload storage disk //
         $main = Storage::disk('public_upload');
 

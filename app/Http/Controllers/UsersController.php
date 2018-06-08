@@ -55,7 +55,7 @@ class UsersController extends Controller {
         // Output data //
         $data = array(
             'user' => $user,
-            'avatar' => $user->profile_fields['avatar'] === '' ? 'noimg.png' : $user->profile_fields['avatar'],
+            'avatar' => $user->avatar,
             'bio' => $user->profile_fields['bio'] !== '' ? $user->profile_fields['bio'] : 'User has not set up a bio yet',
             'photos' => $user->photographs()->orderBy('created_at', 'desc')->paginate(4),
         );
@@ -79,7 +79,7 @@ class UsersController extends Controller {
         // Output data //
         $data = array(
             'user' => $user,
-            'avatar' => $user->profile_fields['avatar'] === '' ? 'noimg.png' : $user->profile_fields['avatar'],
+            'avatar' => $user->avatar,
             'bio' => $user->profile_fields['bio'] !== '' ? $user->profile_fields['bio'] : 'User has not set up a bio yet',
         );
 
@@ -158,7 +158,7 @@ class UsersController extends Controller {
                     ));
 
                     // Check original against saved //
-                    if(Hash::check($request->input('original'), $user->password)){
+                    if (Hash::check($request->input('original'), $user->password)) {
                         $field = 'Password';
                         // Hash the new password //
                         $user->password = Hash::make($request->input('password'));
