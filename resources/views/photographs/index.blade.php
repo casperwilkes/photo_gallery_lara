@@ -1,9 +1,11 @@
 @extends('base')
 
 @section('content')
-    <div class="row">
-        <a href="photographs/create" class="btn btn-xs btn-primary">Upload a new photograph</a>
-    </div>
+    @auth
+        <div class="row">
+            <a href="photographs/create" class="btn btn-xs btn-primary">Upload a new photograph</a>
+        </div>
+    @endauth
 
     <div class="row">
         @if($photos->isNotEmpty())
