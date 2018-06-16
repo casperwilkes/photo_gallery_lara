@@ -18,13 +18,22 @@
 //});
 
 Route::get('/', array('uses' => 'HomeController@index'));
-Route::get('/test/{data?}', 'HomeController@test')->name('test');
+Route::get('test/{data?}', 'HomeController@test')->name('test');
 
 // Authentication routes //
 Auth::routes();
 
 // Home page //
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
+// About page //
+Route::get('about', 'HomeController@about')->name('about');
+// Privacy policy //
+Route::get('privacy', 'HomeController@privacy')->name('privacy');
+// Terms and conditions //
+Route::get('terms', 'HomeController@terms')->name('terms');
+// FAQ //
+Route::get('faq', 'HomeController@faq')->name('faq');
+
 
 // Photograph //
 Route::Resource('photographs', 'PhotographsController');
