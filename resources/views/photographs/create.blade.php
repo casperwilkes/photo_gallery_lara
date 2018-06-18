@@ -9,7 +9,9 @@
 
     <div class="row">
         <div class="col-md-3">
-            <a href="photographs" class="btn btn-xs btn-primary">Back to main</a>
+            <a href="photographs" class="btn btn-sm btn-default">
+                <span class="glyphicon glyphicon-home"></span> Back to Main
+            </a>
         </div>
     </div>
 

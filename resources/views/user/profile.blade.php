@@ -3,21 +3,24 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <p>
-                <a href="{{route('home')}}" class="btn btn-xs btn-default">
+            <div class="btn btn-group btn-group-sm">
+                <a href="{{route('home')}}" class="btn btn-default">
                     <span class="glyphicon glyphicon-home"></span> Back to Main
                 </a>
                 @auth
+                    <a href="{{route('photographs.create')}}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-plus"></span> New Photograph
+                    </a>
                     @if(Auth::user()->id === $user->id)
-                        <a href="profile/{{ $user->id }}/edit" class="btn btn-xs btn-primary">
+                        <a href="profile/{{ $user->id }}/edit" class="btn btn-info">
                             <span class="glyphicon glyphicon-user"></span> Edit Profile
                         </a>
-                        <a href="{{route('logout')}}" class="btn btn-xs btn-warning">
+                        <a href="{{route('logout')}}" class="btn btn-warning">
                             <span class="glyphicon glyphicon-log-out"></span> Logout
                         </a>
                     @endif
                 @endauth
-            </p>
+            </div>
         </div>
     </div>
 

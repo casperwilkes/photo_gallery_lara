@@ -1,9 +1,15 @@
 @extends('base')
 
 @section('content')
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Photographs</h1>
+        </div>
+    </div>
+
     @auth
         <div class="row">
-            <a href="photographs/create" class="btn btn-xs btn-primary">Upload a new photograph</a>
+            <a href="photographs/create" class="btn btn-sm btn-primary">Upload a new photograph</a>
         </div>
     @endauth
 
@@ -17,7 +23,7 @@
                         </a>
 
                         <div class="caption">
-                            <p>{{ ucwords($photo->caption) }}</p>
+                            <p>{{ str_limit(ucwords($photo->caption),30) }}</p>
                         </div>
                     </div>
                 @endforeach

@@ -4,24 +4,35 @@
 
     <div class="row">
         <div class="col-md-12">
-            <p>
-                <a href="photographs" class="btn btn-xs btn-default">Back to main</a>
-                @auth
-                    @if(Auth::user()->id === $photo->user_id)
-                        <a href="photographs/{{$photo->id}}/edit" class="btn btn-xs btn-primary">Edit Photograph</a>
-                    @endif
-                @endauth
-            </p>
+            <h1 class="text-center">{{ ucwords($photo->caption) }}</h1>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
-            <p>
+            <div class="btn btn-group btn-group-sm">
+                <a href="photographs" class="btn btn-default">
+                    <span class="glyphicon glyphicon-home"></span> Back to Main
+                </a>
+                @auth
+                    @if(Auth::user()->id === $photo->user_id)
+                        <a href="photographs/{{$photo->id}}/edit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit Photograph
+                        </a>
+                    @endif
+                @endauth
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <p id="prev_next" class="clearfix">
                 @if($photo->previous())
                     <a href="photographs/{{$photo->previous()->id}}"
                        title="{{$photo->previous()->caption}}"
                        class="btn btn-primary pull-left">
-                        <span class="glyphicon glyphicon-chevron-left"></span> Previous
+                        <span class="glyphicon glyphicon-chevron-left"></span> Prev
                     </a>
                 @endif
                 @if($photo->next())
@@ -34,11 +45,6 @@
             </p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="text-center">{{ ucwords($photo->caption) }}</h1>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-md-12">
@@ -46,7 +52,9 @@
                  class="center-block img-responsive img-thumbnail">
         </div>
     </div>
+
     <br>
+
     <div class="row">
         <div class="col-md-4 col-md-offset-2">
             <dl class="dl-horizontal">
@@ -73,27 +81,30 @@
             @endguest
 
             @auth
-                <div class="well well-lg">
-                    <form class="form form-horizontal" action="comments" method="post">
-                        <fieldset>
-                            {{ csrf_field() }}
-                            <input type="hidden" name="photo_id" value="{{ $photo->id }}">
-                            <div class="form-group">
-                                <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Leave a comment</div>
+                    <div class="panel-body">
+                        <form class="form form-horizontal" action="comments" method="post">
+                            <fieldset>
+                                {{ csrf_field() }}
+                                <input type="hidden" name="photo_id" value="{{ $photo->id }}">
+                                <div class="form-group">
+                                    <div class="col-md-12">
                                 <textarea name="comment"
                                           class="form-control"
                                           placeholder="What would you like to say?"
                                           rows="4"
                                           required></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <button class="btn btn-primary">Submit Comment</button>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-primary">Submit Comment</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </fieldset>
-                    </form>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
             @endauth
         </div>
