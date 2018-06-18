@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Seeder file to add photos to the database.
+ *
+ * @author Casper Wilkes <casper@casperwilkes.net>
+ */
+
 use Illuminate\Database\Seeder;
 
 class PhotoTableSeeder extends Seeder {
@@ -11,6 +17,6 @@ class PhotoTableSeeder extends Seeder {
      */
     public function run() {
 
-        factory(App\Photograph::class, 100)->create();
+        factory(App\Photograph::class, 70)->create();
     }
 }

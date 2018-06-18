@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Comment out, causes error with caching //
+// https://github.com/laravel/framework/issues/7319#issuecomment-73362932
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});

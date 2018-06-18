@@ -14,6 +14,11 @@ if (!function_exists('build_img_structure')) {
         $main_root = $main->getAdapter()->getPathPrefix();
         $resource_root = resource_path('img/');
 
+        // Check if exists, try to create, then check again //
+        if (!is_dir($main_root) && !mkdir($main_root, 0755) && !is_dir($main_root)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $main_root));
+        }
+
         // Build out main image directory //
         if (!$main->exists('main')) {
             // Setup paths //

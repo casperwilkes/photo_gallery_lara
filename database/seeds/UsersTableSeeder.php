@@ -1,8 +1,13 @@
 <?php
 
+/**
+ * Seeder file to add users to the database.
+ *
+ * @author Casper Wilkes <casper@casperwilkes.net>
+ */
+
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 use App\User;
 
 class UsersTableSeeder extends Seeder {
@@ -33,29 +38,11 @@ class UsersTableSeeder extends Seeder {
                     'created_at' => $date,
                     'updated_at' => $date,
                 ),
-                array(
-                    'name' => 'wendy',
-                    'email' => 'wendy@wendys.com',
-                    'password' => $password,
-                    'profile_fields' => $pfe,
-                    'remember_token' => str_random(10),
-                    'created_at' => $date,
-                    'updated_at' => $date,
-                ),
-                array(
-                    'name' => 'dave',
-                    'email' => 'dave@wendys.com',
-                    'password' => $password,
-                    'profile_fields' => $pfe,
-                    'remember_token' => str_random(10),
-                    'created_at' => $date,
-                    'updated_at' => $date,
-                ),
             )
         );
 
         // Generate fakes //
-        factory(App\User::class, 50)
+        factory(App\User::class, 30)
             ->create(
                 array(
                     'profile_fields' => $profile_fields,

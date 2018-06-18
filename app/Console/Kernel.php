@@ -2,7 +2,8 @@
 
 namespace App\Console;
 
-use App\Console\Commands\clear;
+use App\Console\Commands\clearCommand;
+use App\Console\Commands\setupCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        clear::class
+        clearCommand::class,
+        setupCommand::class
     ];
 
     /**

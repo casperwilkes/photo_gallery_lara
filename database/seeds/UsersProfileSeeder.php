@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Seeder file to add user profiles to the database.
+ *
+ * @author Casper Wilkes <casper@casperwilkes.net>
+ */
+
 use App\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
@@ -16,7 +22,10 @@ class UsersProfileSeeder extends Seeder {
     public function run() {
         $faker = Factory::create();
 
-        $iteration = 30;
+        // Build out img structure //
+        build_img_structure();
+
+        $iteration = 20;
         $users = User::all()->random($iteration);
 
         // Main storage path //
